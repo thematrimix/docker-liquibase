@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <!--
+    ********************************************************************************************************************
+    * Tables
+    ********************************************************************************************************************
+    -->
+    <changeSet id="db-schema-for-country" author="joshua.vaughn">
+        <comment>The intial creation of the Country table</comment>
+        <createTable schemaName="public" tableName="country">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="VARCHAR(80)">
+                <constraints nullable="false" />
+            </column>
+            <column name="iso_alpha_2" type="VARCHAR(2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="iso_alpha_3" type="VARCHAR(3)" />
+            <column name="iso_numeric" type="VARCHAR(3)" />
+            <column name="created_on" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="modified_on" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!--
+    ********************************************************************************************************************
+    * Version Tag
+    ********************************************************************************************************************
+    -->
+    <changeSet id="tag-v0.0.1" author="joshua.vaughn">
+        <tagDatabase tag="v0.0.1" />
+    </changeSet>
+
+</databaseChangeLog>

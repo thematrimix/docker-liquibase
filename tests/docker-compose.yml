@@ -1,0 +1,44 @@
+version: '3'
+services:
+  db1:
+      image: postgres:9-alpine
+      environment:
+          POSTGRES_PASSWORD: hPC5ERGVC9AmW7ua
+      ports:
+          - "15432:5432"
+      volumes:
+          - "./config:/docker-entrypoint-initdb.d"
+  db2:
+      image: postgres:9-alpine
+      environment:
+          POSTGRES_PASSWORD: 8cNj~&#Xvv7CFs&D
+      ports:
+          - "25432:5432"
+      volumes:
+          - "./config:/docker-entrypoint-initdb.d"
+  liquibase-update-db1:
+      build:
+          context: ../
+      command: update
+      depends_on:
+          - db1
+      environment:
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: hPC5ERGVC9AmW7ua
+          DATABASE_URL: db1:5432/postgres
+          CHANGELOG_FILE: db1.changelog-master.xml
+      volumes:
+          - "./changelogs:/changelogs"
+  liquibase-update-db2:
+      build:
+          context: ../
+      command: update
+      depends_on:
+          - db2
+      environment:
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: 8cNj~&#Xvv7CFs&D
+          DATABASE_URL: db2:5432/postgres
+          CHANGELOG_FILE: db2.changelog-master.xml
+      volumes:
+          - "./changelogs:/changelogs"
